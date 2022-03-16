@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="NhaSach" Class="MyDataDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.\sqlexpress;Initial Catalog=NhaSach;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="NhaSachConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Invoice" Member="Invoices">
+    <Type Name="Invoice">
+      <Column Name="Invoice_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Invoice_DateCreate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="Invoice_Invoice_Detail" Member="Invoice_Details" ThisKey="Invoice_ID" OtherKey="Invoice_ID" Type="Invoice_Detail" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Invoice_Detail" Member="Invoice_Details">
+    <Type Name="Invoice_Detail">
+      <Column Name="masach" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Invoice_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="giamua" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="soluongmua" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Invoice_Invoice_Detail" Member="Invoice" ThisKey="Invoice_ID" OtherKey="Invoice_ID" Type="Invoice" IsForeignKey="true" />
+      <Association Name="Sach_Invoice_Detail" Member="Sach" ThisKey="masach" OtherKey="masach" Type="Sach" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Sach" Member="Saches">
+    <Type Name="Sach">
+      <Column Name="masach" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="maloai" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="tensach" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="hinh" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="giaban" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="ngaycapnhat" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
+      <Column Name="soluongton" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Sach_Invoice_Detail" Member="Invoice_Details" ThisKey="masach" OtherKey="masach" Type="Invoice_Detail" />
+      <Association Name="TheLoai_Sach" Member="TheLoai" ThisKey="maloai" OtherKey="maloai" Type="TheLoai" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TheLoai" Member="TheLoais">
+    <Type Name="TheLoai">
+      <Column Name="maloai" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tenloai" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Association Name="TheLoai_Sach" Member="Saches" ThisKey="maloai" OtherKey="maloai" Type="Sach" />
+    </Type>
+  </Table>
+</Database>
